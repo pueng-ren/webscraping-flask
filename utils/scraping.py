@@ -4,7 +4,13 @@ import requests
 
 class Webscraping:
 
-    header = [
+    def scraping_page(self, url:str):
+        url = requests.get(url)
+        data = BeautifulSoup(url.content, "html.parser")
+        return data
+    
+    def get_stock(self, symbol:str):
+        header = [
             "date"
             , "open"
             , "max"
@@ -18,13 +24,6 @@ class Webscraping:
             , "SETIndex"
             , "percent_change2"
         ]
-
-    def scraping_page(self, url:str):
-        url = requests.get(url)
-        data = BeautifulSoup(url.content, "html.parser")
-        return data
-    
-    def get_stock(self, symbol:str):
         stockByDate = {}
         stockByColumn = {}
         scraping_page = self.scraping_page("https://www.settrade.com/C04_02_stock_historical_p1.jsp?txtSymbol="+symbol+"&selectPage=1&max=200")
